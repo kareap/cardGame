@@ -49,7 +49,6 @@ public class CardGame {
                     "HIT(1)\n" +
                     "STAND(2)");
             int playChoice = scanner.nextInt();
-            String fixNextIntProblem = scanner.nextLine();
 
             if (playChoice == 1) {
                 PlayingCard newCard = deck.pickCard();
@@ -70,11 +69,17 @@ public class CardGame {
                     System.out.println("The sum of the dealers hand is more than 17 and the dealer must STAND");
                 }
                 else {
-                    System.out.println("The sum of the dealers hand is less than 17 and the dealer can pick a card...");
+                    System.out.println("The sum of the dealers hand is less than 17 and the dealer hits...");
                     dealersHand.add(deck.pickCard());
                     faceCardCheck(dealersHand);
-                    sumHand(dealersHand);
+                    //sumHand(dealersHand);
                     System.out.println("The dealer picks "+ dealersHand.get(2).toString());
+                    if (sumHand(dealersHand) < 21 && sumHand(dealersHand) < sumHand(playersHand)) {
+                        dealersHand.add(deck.pickCard());
+                        faceCardCheck(dealersHand);
+                        //sumHand(dealersHand);
+                        System.out.println("The dealer picks "+ dealersHand.get(2).toString());
+                    }
                 }
                 setWinner();
                 play = false;
@@ -124,7 +129,8 @@ public class CardGame {
             sum = sum + (hand.get(i).getGameValue());
         }
         if (sum > 21 && aceList.size() < 1) {
-            System.out.println("\nYour sum is > 21!");
+            System.out.println("\nThe sum is > 21!");
+
             System.out.println("You LOST!!!\n");
             play = false;
             showMenu();
